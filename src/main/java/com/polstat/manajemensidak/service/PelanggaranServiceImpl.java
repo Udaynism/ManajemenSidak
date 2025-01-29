@@ -63,4 +63,13 @@ public class PelanggaranServiceImpl implements PelanggaranService {
                 .orElseThrow(() -> new IllegalArgumentException("Pelanggaran tidak ditemukan dengan ID: " + id));
         pelanggaranRepository.delete(pelanggaran);
     }
+
+    @Override
+    public int getTotalPoinByNim(String nim) {
+        Integer totalPoin = pelanggaranRepository.findTotalPoinByNim(nim);
+        return totalPoin != null ? totalPoin : 0; // Jika null, kembalikan 0
+    }
+
+
+
 }

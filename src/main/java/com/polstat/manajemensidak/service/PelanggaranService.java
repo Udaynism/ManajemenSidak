@@ -11,4 +11,5 @@ public interface PelanggaranService {
     List<Pelanggaran> getPelanggaranByMahasiswa(String nim);
     Pelanggaran updatePelanggaran(Long id, PelanggaranDto pelanggaranDto);  // Metode untuk update pelanggaran
     void deletePelanggaran(Long id);
+    int getTotalPoinByNim(String nim);
 }

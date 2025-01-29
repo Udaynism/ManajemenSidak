@@ -33,14 +33,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateProfile(String email, UserDto userDto) {
+        // Cari user berdasarkan email
         User existingUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
 
+        // Perbarui data user
         existingUser.setName(userDto.getName());
+        existingUser.setAddress(userDto.getAddress()); // Tambahkan address
+        existingUser.setPhoneNumber(userDto.getPhoneNumber()); // Tambahkan phoneNumber
 
+        // Simpan perubahan
         User updatedUser = userRepository.save(existingUser);
+
+        // Kembalikan user yang diperbarui sebagai DTO
         return UserMapper.mapToUserDto(updatedUser);
     }
+
 
     @Override
     public void changePassword(String email, String oldPassword, String newPassword) {
@@ -62,5 +70,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
         userRepository.delete(user);
+    }
+
+    @Override
+    public boolean validatePassword(String email, String inputPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User tidak ditemukan dengan email: " + email));
+
+        return passwordEncoder.matches(inputPassword, user.getPassword());
     }
 }

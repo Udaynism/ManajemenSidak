@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/pelanggaran")
@@ -44,4 +46,24 @@ public class PelanggaranController {
         pelanggaranService.deletePelanggaran(id);
         return ResponseEntity.ok("Pelanggaran berhasil dihapus");
     }
+
+    @GetMapping("/mahasiswa/{nim}/totalpoin")
+    public ResponseEntity<Integer> getTotalPoinByNim(@PathVariable String nim) {
+        int totalPoin = pelanggaranService.getTotalPoinByNim(nim);
+        return ResponseEntity.ok(totalPoin);
+    }
+
+    @GetMapping("/mahasiswa/totalpoin")
+    public ResponseEntity<Map<String, Integer>> getTotalPoinForMultipleMahasiswa(@RequestParam List<String> nims) {
+        Map<String, Integer> totalPoinMap = new HashMap<>();
+        for (String nim : nims) {
+            Integer totalPoin = pelanggaranService.getTotalPoinByNim(nim);
+            totalPoinMap.put(nim, totalPoin != null ? totalPoin : 0);
+        }
+        return ResponseEntity.ok(totalPoinMap);
+    }
+
+
+
 }
+

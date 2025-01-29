@@ -45,4 +45,23 @@ public class UserController {
         userService.deleteAccount(email);
         return ResponseEntity.ok("Akun berhasil dihapus");
     }
+
+    @PostMapping("/profile/validate-password")
+    public ResponseEntity<String> validatePassword(@RequestBody Map<String, String> request, Principal principal) {
+        String email = principal.getName();
+        String inputPassword = request.get("password");
+
+        // Ambil user dari database
+        UserDto user = userService.getUserByEmail(email);
+
+        // Validasi password
+        if (userService.validatePassword(email, inputPassword)) {
+            return ResponseEntity.ok("Password valid");
+        } else {
+            return ResponseEntity.status(403).body("Password salah");
+        }
+    }
+
+
+
 }

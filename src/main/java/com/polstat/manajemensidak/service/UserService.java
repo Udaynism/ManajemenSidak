@@ -8,5 +8,6 @@ public interface UserService {
     UserDto updateProfile(String email, UserDto userDto);
     void changePassword(String email, String oldPassword, String newPassword);
     void deleteAccount(String email);
+    boolean validatePassword(String email, String inputPassword);
 }
 

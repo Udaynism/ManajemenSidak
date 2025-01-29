@@ -8,24 +8,24 @@ public class UserMapper {
     public static User mapToUser(UserDto userDto) {
         return User.builder()
                 .id_SPD(userDto.getId_SPD())
-                .name(userDto.getName())
                 .email(userDto.getEmail())
-                .password(userDto.getPassword())
                 .nim(userDto.getNim())
-                .address(userDto.getAddress())
-                .phoneNumber(userDto.getPhoneNumber())
+                .name(userDto.getName())
+                .password(userDto.getPassword())
+                .address(userDto.getAddress()) // Tambahkan address
+                .phoneNumber(userDto.getPhoneNumber()) // Tambahkan phoneNumber
                 .build();
     }
 
     public static UserDto mapToUserDto(User user) {
         return UserDto.builder()
                 .id_SPD(user.getId_SPD())
-                .name(user.getName())
                 .email(user.getEmail())
-                .password(user.getPassword())
                 .nim(user.getNim())
-                .address(user.getAddress())
-                .phoneNumber(user.getPhoneNumber())
+                .name(user.getName())
+                .address(user.getAddress()) // Tambahkan address
+                .phoneNumber(user.getPhoneNumber()) // Tambahkan phoneNumber
                 .build();
     }
 }
+
